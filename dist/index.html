@@ -4,11 +4,32 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Starter Kit</title>
+  <title>Hotels Bookings</title>
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
-  
+  <header class='page-header'>
+  <h1> Hotels.com </h1>
+</header>
+  <section class='heading-box'>
+    <section class="customer-name-display">Welcome User Name</section>
+    <nav class='navbar'>HOME Your Bookings</nav>
+  </section>
+  <main class='main__information-display'>
+    <section class='main__information-display-bar'>
+      <div>Your Bookings</div>
+       <section class='main__button-box'>
+         <button data-button='all-bookings'>All</button>
+         <button data-button='Todays-bookings'>Today</button>
+         <button data-button='Future-bookings'>Future</button>
+         <button data-button='Past-bookings'>Past</button>
+       </section>
+       <section class='main__cost-display'>$$$$</section>
+     </section>
+    <section class='main__content-display'>
+      <section class='main__content-display-booked-dates'>01/1995/31</section>
+    </section>
+  </main>
+
   <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
   <script src="bundle.js"></script>
 
