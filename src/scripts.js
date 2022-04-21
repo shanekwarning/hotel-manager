@@ -13,6 +13,8 @@ import Customer from './classes/Customer-class.js';
 const bookedDatesDisplay = document.querySelector('.main__content-display')
 const showAllBookingButton = document.querySelector('.all-bookings')
 const totalCostDisplay = document.querySelector('.main__cost-display')
+const submitDateButton = document.querySelector('.Submit-date')
+const dateInput = document.querySelector('.date-input')
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Global Variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let bookings;
 let hotel;
@@ -29,6 +31,12 @@ window.addEventListener('load', () => {
 
 showAllBookingButton.addEventListener('click', function(){
   showCustomerBookings()
+})
+
+submitDateButton.addEventListener('click', function() {
+  console.log('input', dateInput.value.split('-').join('/'))
+  hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
+
 })
 
 
