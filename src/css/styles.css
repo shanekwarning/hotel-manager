@@ -56,14 +56,25 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  overflow-x: scroll;
+}
+.main__content-display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 60%;
+  overflow-y: scroll;
+}
+.main__customer-booking-display {
+  height: 120%;
+  overflow-y: scroll;
 }
 
 .main__search-for-room-display {
-  height: 100%;
+  height: 80%;
   overflow-y: scroll;
 }
-.avalible-room-card {
+.avalible-room-card,
+.main__content-display-booked-dates  {
   display: flex;
   flex-direction: row;
   color: #FFFFF0;
@@ -77,13 +88,15 @@ h1 {
   margin-bottom: 10px
 }
 
-.room-information-box {
+
+/* .room-information-box
+ {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   width: 60%;
   border: solid green 1px
-}
+} */
 
 .room-discriptors {
   margin: 6px
