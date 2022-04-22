@@ -11,6 +11,7 @@ body {
 .page-header {
   display: flex;
   justify-content: center;
+  background-color: #14bddb;
 }
 
 h1 {
@@ -23,6 +24,7 @@ h1 {
   flex-direction: row;
   justify-content: space-between;
   height: 7%;
+  background-color: #e2fa0c;
   border: solid red 1px
 }
 
@@ -45,6 +47,35 @@ h1 {
 .main__content-display {
   height: 70%;
   border: solid red 1px
+}
+
+.avalible-room-card {
+  display: flex;
+  flex-direction: row;
+  color: #FFFFF0;
+  background-color: #383428;
+  opacity: 60%;
+  width: 27%;
+  border-radius: 25px;
+  border: solid blue 1px;
+  height: 10%
+}
+
+.room-information-box {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 60%;
+  border: solid green 1px
+}
+
+.room-discriptors {
+  margin: 6px
+}
+
+.cost-per-night-box {
+display: flex;
+align-items: center;
 }
 
 .hidden {

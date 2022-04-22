@@ -16,6 +16,7 @@ const totalCostDisplay = document.querySelector('.main__cost-display')
 const submitDateButton = document.querySelector('.Submit-date')
 const dateInput = document.querySelector('.date-input')
 const roomDropDown = document.getElementById('rooms')
+const avalibleRoomsDisplay = document.querySelector('.main__avaliable-rooms-display')
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Global Variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let bookings;
 let hotel;
@@ -25,8 +26,6 @@ window.addEventListener('load', () => {
   allFetchData.then(data => {
   hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
   currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
-  console.log(hotel)
-  console.log(currentCustomer)
 }).catch(error => console.log(error))
 });
 
@@ -35,13 +34,9 @@ showAllBookingButton.addEventListener('click', function(){
 })
 
 submitDateButton.addEventListener('click', function() {
-  console.log('input', dateInput.value.split('-').join('/'))
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
-  console.log('before', hotel.avalibleRooms)
-  console.log('rmv', roomDropDown.value)
   hotel.filterByRoomType(roomDropDown.value)
-  // console.log(roomDropDown.value)
-  console.log('after', hotel.avalibleRooms)
+  console.log(hotel.avalibleRooms)
 })
 
 
