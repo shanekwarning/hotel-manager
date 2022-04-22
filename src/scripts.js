@@ -15,6 +15,7 @@ const showAllBookingButton = document.querySelector('.all-bookings')
 const totalCostDisplay = document.querySelector('.main__cost-display')
 const submitDateButton = document.querySelector('.Submit-date')
 const dateInput = document.querySelector('.date-input')
+const roomDropDown = document.getElementById('rooms')
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Global Variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let bookings;
 let hotel;
@@ -36,7 +37,11 @@ showAllBookingButton.addEventListener('click', function(){
 submitDateButton.addEventListener('click', function() {
   console.log('input', dateInput.value.split('-').join('/'))
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
-
+  console.log('before', hotel.avalibleRooms)
+  console.log('rmv', roomDropDown.value)
+  hotel.filterByRoomType(roomDropDown.value)
+  // console.log(roomDropDown.value)
+  console.log('after', hotel.avalibleRooms)
 })
 
 

@@ -13,10 +13,17 @@ class Hotel {
       takenRoomNumbers.forEach(num => {
         if(num === room.number){
           this.avalibleRooms.push(room)
-          console.log('open rooms', this.avalibleRooms)
         }
       })
     })
+  }
+
+  filterByRoomType(room) {
+    if(room === 'all'){
+      return this.avalibleRooms
+    } else if(room !== 'all'){
+      this.avalibleRooms = this.avalibleRooms.filter(type => type.roomType === room)
+    }
   }
 
 }
