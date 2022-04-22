@@ -17,6 +17,8 @@ const submitDateButton = document.querySelector('.Submit-date')
 const dateInput = document.querySelector('.date-input')
 const roomDropDown = document.getElementById('rooms')
 const avalibleRoomsDisplay = document.querySelector('.main__avaliable-rooms-display')
+const customerBookingsDisplay = document.querySelector('.main__customer-booking-display')
+const viewBookingsButton = document.querySelector('.bookings-button')
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Global Variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let bookings;
 let hotel;
@@ -32,20 +34,48 @@ window.addEventListener('load', () => {
 showAllBookingButton.addEventListener('click', function(){
   showCustomerBookings()
 })
+viewBookingsButton.addEventListener('click', function() {
+  if(viewBookingsButton.innerText === 'View Your Bookings'){
+  showYourBookingsView()
+  avalibleRoomsDisplay.innerHTML = ''
+  viewBookingsButton.innerText = 'Look for Rooms'
+} else if (viewBookingsButton.innerText === 'Look for Rooms'){
+  viewBookingsButton.innerText = 'View Your Bookings';
+  showAvalibleRoomsView()
+  bookedDatesDisplay.innerHTML = ''
+}
+})
 
 submitDateButton.addEventListener('click', function() {
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
   hotel.filterByRoomType(roomDropDown.value)
+  createFilteredRoomsHTML()
   console.log(hotel.avalibleRooms)
 })
 
 
 let createShowBookingsHTML = () => {
-  console.log(currentCustomer.totalCost)
   currentCustomer.bookings.forEach(booking => {
     bookedDatesDisplay.innerHTML +=
     `<section class='main__content-display-booked-dates'>Date Booked:${booking.date} Room Number:${booking.roomNumber}</section>
   </section>`
+  })
+}
+
+const createFilteredRoomsHTML = () => {
+  avalibleRoomsDisplay.innerHTML = ''
+  hotel.avalibleRooms.forEach(avalibleRoom => {
+    avalibleRoomsDisplay.innerHTML += `
+    <div class='avalible-room-card'>
+      <section class='room-information-box'>
+        <p class='room-discriptors'>Room Number: ${avalibleRoom.number}</p>
+        <p class='room-discriptors'>Room Type: ${avalibleRoom.roomType}</p>
+        <p class='room-discriptors'>Number of Beds: ${avalibleRoom.numBeds}</p>
+        <p class='room-discriptors'>Bed Size: ${avalibleRoom.bedSize}</p>
+        <p class='room-discriptors'>This Room has a bidet: ${avalibleRoom.bidet}</p>
+      </section>
+      <section class='cost-per-night-box'>Cost Per Night: $${avalibleRoom.costPerNight}</section>
+    </div>`
   })
 }
 
@@ -58,4 +88,22 @@ const showCustomerBookings = () => {
   currentCustomer.calculateCost(hotel.rooms)
   createShowBookingsHTML()
   totalCost()
+}
+
+const showYourBookingsView = () => {
+  hide(avalibleRoomsDisplay)
+  show(customerBookingsDisplay)
+}
+
+const showAvalibleRoomsView = () => {
+  hide(customerBookingsDisplay);
+  show(avalibleRoomsDisplay)
+}
+
+const hide = (element) => {
+  element.classList.add('hidden')
+}
+
+const show = (element) => {
+  element.classList.remove('hidden')
 }

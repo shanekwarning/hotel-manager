@@ -49,6 +49,12 @@ h1 {
   border: solid red 1px
 }
 
+.main__avaliable-rooms-display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+}
 .avalible-room-card {
   display: flex;
   flex-direction: row;
@@ -58,7 +64,9 @@ h1 {
   width: 27%;
   border-radius: 25px;
   border: solid blue 1px;
-  height: 10%
+  height: 10%;
+  margin-top: 10px;
+  margin-bottom: 10px
 }
 
 .room-information-box {
