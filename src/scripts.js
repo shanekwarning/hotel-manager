@@ -6,6 +6,8 @@ import './css/styles.css';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png';
+import './images/Hotel-room-img.jpg';
+import './images/classic-hotel-room-14.jpg'
 import { allFetchData } from './apiCalls';
 import Hotel from './classes/Hotel-class.js';
 import Customer from './classes/Customer-class.js';
