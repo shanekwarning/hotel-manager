@@ -7,7 +7,6 @@ body {
   height: 1000px;
   padding: 0;
   margin: 0;
-  border: solid red 1px
   /* background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%); */
 }
 
@@ -18,7 +17,6 @@ body {
 }
 
 h1 {
-  border: solid red 1px;
   height:15%
 }
 
@@ -27,8 +25,7 @@ h1 {
   flex-direction: row;
   justify-content: space-between;
   height: 7%;
-  background-color: #e2fa0c;
-  border: solid red 1px
+  background: linear-gradient(#14bddb, yellow, white);
 }
 
 .customer-name-display {
@@ -36,7 +33,6 @@ h1 {
 }
 
 .main__information-display{
-  border: solid red 1px;
   height: 78%;
 }
 
@@ -44,12 +40,13 @@ h1 {
 .main__search-for-room-display-bar {
   display: flex;
   justify-content: space-between;
-  border: solid red 1px
+  background: linear-gradient(white, yellow);
+
 }
+
 
 .main__content-display {
   height: 70%;
-  border: solid red 1px
 }
 
 .main__avaliable-rooms-display {
@@ -64,40 +61,33 @@ h1 {
   height: 60%;
   overflow-y: scroll;
 }
-.main__customer-booking-display {
-  height: 120%;
+
+.main-hotel-content-display{
   overflow-y: scroll;
+  height:80%
 }
 
-.main__search-for-room-display {
-  height: 80%;
-  overflow-y: scroll;
-}
 .avalible-room-card,
 .main__content-display-booked-dates  {
   display: flex;
   flex-direction: row;
   color: #FFFFF0;
   background-color: #383428;
-  opacity: 60%;
+  opacity: 90%;
   width: 27%;
-  border-radius: 25px;
-  border: solid blue 1px;
+  border-radius: 20px;
   height: 10%;
   margin-top: 10px;
   margin-bottom: 10px
 }
 
+.main__content-display-booked-dates {
+  justify-content: center
+}
 
-/* .room-information-box
- {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  width: 60%;
-  border: solid green 1px
-} */
-
+.room-number {
+    padding-left: 14%;
+}
 .room-discriptors {
   margin: 6px
 }

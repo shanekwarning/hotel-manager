@@ -92,7 +92,8 @@ const createFilteredRoomsHTML = () => {
 }
 
 let totalCost = () => {
-  totalCostDisplay.innerText = `${currentCustomer.totalCost.toFixed(2)}`
+  totalCostDisplay.innerText = ''
+  totalCostDisplay.innerText = `Total Spent on Rooms: $${currentCustomer.totalCost.toFixed(2)}`
 }
 
 const showCustomerBookings = () => {
