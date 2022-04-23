@@ -59,6 +59,13 @@ submitDateButton.addEventListener('click', function() {
   createFilteredRoomsHTML()
 })
 
+avalibleRoomsDisplay.addEventListener('click', (e) => {
+  if(e.target.dataset.button) {
+    avalibleRoomsDisplay.innerHTML = ''
+    createConfirmationHTML(e)
+  };
+});
+
 
 let createShowBookingsHTML = () => {
   currentCustomer.bookings.forEach(booking => {
@@ -76,7 +83,7 @@ const createFilteredRoomsHTML = () => {
   avalibleRoomsDisplay.innerHTML = ''
   hotel.avalibleRooms.forEach(avalibleRoom => {
     avalibleRoomsDisplay.innerHTML += `
-    <div class='avalible-room-card'>
+    <div data-room='room-card' class='avalible-room-card'>
       <section class='room-information-box'>
         <p class='room-discriptors'>Room Number: ${avalibleRoom.number}</p>
         <p class='room-discriptors'>Room Type: ${avalibleRoom.roomType}</p>
@@ -85,10 +92,32 @@ const createFilteredRoomsHTML = () => {
         <p class='room-discriptors'>This Room has a bidet: ${avalibleRoom.bidet}</p>
       </section>
       <section class='cost-per-night-box'>Cost Per Night: $${avalibleRoom.costPerNight}
-      <button class='booking-button'>Book Now</button>
+      <button data-button='room' class="${avalibleRoom.number}">Book Now</button>
       </section>
     </div>`
   })
+}
+
+const createConfirmationHTML = (e) => {
+  let confirmRoomNumber = e.target.classList[0]
+  console.log(confirmRoomNumber)
+  console.log(hotel.rooms[confirmRoomNumber])
+  avalibleRoomsDisplay.innerHTML =`
+<div class='confirm-booking-box'>
+    <section class='room-information-box'>
+      <p class='confirmation-header'> Are you sure you want to book room ${confirmRoomNumber}?</p>
+      <div class='room-confirmation-styling-box'>
+      <p class='room-discriptors'>Room Number: ${hotel.rooms[confirmRoomNumber - 1].number}</p>
+      <p class='room-discriptors'>Room Type:${hotel.rooms[confirmRoomNumber - 1].roomType}</p>
+      <p class='room-discriptors'>Number of Beds: ${hotel.rooms[confirmRoomNumber - 1].numBeds}</p>
+      <p class='room-discriptors'>Bed Size: ${hotel.rooms[confirmRoomNumber - 1].bedSize}</p>
+      <p class='room-discriptors'>This Room has a bidet:  ${hotel.rooms[confirmRoomNumber - 1].bidet}</p>
+    </section>
+    <section class='cost-per-night-box'>Cost Per Night: ${hotel.rooms[confirmRoomNumber - 1].costPerNight}
+    <button data-button='room' class="${confirmRoomNumber}">Confirm Reservation</button>
+  </section>
+</div>
+  </div>`
 }
 
 let totalCost = () => {
