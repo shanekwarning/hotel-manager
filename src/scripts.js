@@ -18,9 +18,11 @@ const totalCostDisplay = document.querySelector('.main__cost-display')
 const submitDateButton = document.querySelector('.Submit-date')
 const dateInput = document.querySelector('.date-input')
 const roomDropDown = document.getElementById('rooms')
+const searchForRoomDisplay = document.querySelector('.main__search-for-room-display')
 const avalibleRoomsDisplay = document.querySelector('.main__avaliable-rooms-display')
 const customerBookingsDisplay = document.querySelector('.main__customer-booking-display')
 const viewBookingsButton = document.querySelector('.bookings-button')
+const webSiteName = document.querySelector('h1')
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Global Variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let bookings;
 let hotel;
@@ -30,7 +32,10 @@ window.addEventListener('load', () => {
   allFetchData.then(data => {
   hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
   currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
-}).catch(error => console.log(error))
+}).catch(error => {
+  webSiteName.innerText = "Something went wrong please try again."
+  console.log(error)
+})
 });
 
 showAllBookingButton.addEventListener('click', function(){
@@ -52,15 +57,18 @@ submitDateButton.addEventListener('click', function() {
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
   hotel.filterByRoomType(roomDropDown.value)
   createFilteredRoomsHTML()
-  console.log(hotel.avalibleRooms)
 })
 
 
 let createShowBookingsHTML = () => {
   currentCustomer.bookings.forEach(booking => {
     bookedDatesDisplay.innerHTML +=
-    `<section class='main__content-display-booked-dates'>Date Booked:${booking.date} Room Number:${booking.roomNumber}</section>
-  </section>`
+    `<div class='main__content-display-booked-dates'>
+    <section class='booked-date-card-info-box'>
+    <p class='reservation-date'>Date Booked:${booking.date}</p>
+    <p class='room-number'>Room Number:${booking.roomNumber}</p>
+    </section>
+    </div>`
   })
 }
 
@@ -76,13 +84,16 @@ const createFilteredRoomsHTML = () => {
         <p class='room-discriptors'>Bed Size: ${avalibleRoom.bedSize}</p>
         <p class='room-discriptors'>This Room has a bidet: ${avalibleRoom.bidet}</p>
       </section>
-      <section class='cost-per-night-box'>Cost Per Night: $${avalibleRoom.costPerNight}</section>
+      <section class='cost-per-night-box'>Cost Per Night: $${avalibleRoom.costPerNight}
+      <button class='booking-button'>Book Now</button>
+      </section>
     </div>`
   })
 }
 
 let totalCost = () => {
-  totalCostDisplay.innerText = `${currentCustomer.totalCost.toFixed(2)}`
+  totalCostDisplay.innerText = ''
+  totalCostDisplay.innerText = `Total Spent on Rooms: $${currentCustomer.totalCost.toFixed(2)}`
 }
 
 const showCustomerBookings = () => {
@@ -93,13 +104,13 @@ const showCustomerBookings = () => {
 }
 
 const showYourBookingsView = () => {
-  hide(avalibleRoomsDisplay)
+  hide(searchForRoomDisplay)
   show(customerBookingsDisplay)
 }
 
 const showAvalibleRoomsView = () => {
   hide(customerBookingsDisplay);
-  show(avalibleRoomsDisplay)
+  show(searchForRoomDisplay)
 }
 
 const hide = (element) => {
