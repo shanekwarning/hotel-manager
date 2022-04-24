@@ -30,18 +30,7 @@ let currentCustomer;
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ EVENT LISTENERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 window.addEventListener('load', () => {
   instantiateHotel()
-//   allFetchData.then(data => {
-//   hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
-//   currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
-// }).catch(error => {
-//   webSiteName.innerText = "Something went wrong please try again."
-//   console.log(error)
-// })
 });
-
-const testingOne2 = () => {
-  console.log(hotel)
-}
 
 showAllBookingButton.addEventListener('click', function(){
   showCustomerBookings()
@@ -49,8 +38,6 @@ showAllBookingButton.addEventListener('click', function(){
 
 viewBookingsButton.addEventListener('click', function() {
   if(viewBookingsButton.innerText === 'View Your Bookings'){
-    console.log('hello')
-    testingOne2()
   showYourBookingsView()
   avalibleRoomsDisplay.innerHTML = ''
   viewBookingsButton.innerText = 'Look for Rooms'
@@ -62,8 +49,10 @@ viewBookingsButton.addEventListener('click', function() {
 })
 
 submitDateButton.addEventListener('click', function() {
-  console.log('hotel', hotel)
-  // instantiateHotel()
+  if(dateInput.value === ''){
+    popUpMessage()
+    return
+  }
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
   hotel.filterByRoomType(roomDropDown.value)
   createFilteredRoomsHTML()
@@ -76,9 +65,7 @@ avalibleRoomsDisplay.addEventListener('click', (e) => {
     createConfirmationHTML(e)
   }else if(e.target.dataset.confirm) {
     confirmBooking(e)
-    // instantiateHotel()
-    avalibleRoomsDisplay.innerText = 'Your booking is confirmed'
-    console.log('hotels after booking', hotel)
+    displayRoomBookedConfirmationHTML()
   }
 
 });
@@ -164,8 +151,26 @@ const displayNoRoomsAvaliable = () => {
   }
 }
 
+const displayRoomBookedConfirmationHTML = () => {
+  avalibleRoomsDisplay.innerHTML = `
+  <div class='confirm-booking-box'>
+      <section class='room-information-box'>
+        <p class='no-rooms-avalible'>Your booking is confirmed. We hope you have a nice stay.</p>
+      </section>
+  </div>`
+}
+
+const popUpMessage = () => {
+  avalibleRoomsDisplay.innerHTML = `
+  <div class='confirm-booking-box'>
+      <section class='room-information-box'>
+        <p class='no-rooms-avalible'>Please select a date and click submit.</p>
+      </section>
+  </div>`
+}
+
 let totalCost = () => {
-  totalCostDisplay.innerText = ''
+  totalCostDisplay.innerText = '$'
   totalCostDisplay.innerText = `Total Spent on Rooms: $${currentCustomer.totalCost.toFixed(2)}`
 }
 
