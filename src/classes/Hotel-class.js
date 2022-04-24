@@ -28,6 +28,7 @@ class Hotel {
     } else if(room !== 'all'){
       this.avalibleRooms = this.avalibleRooms.filter(type => type.roomType === room)
     }
+    console.log(this.avalibleRooms)
   }
 
 }

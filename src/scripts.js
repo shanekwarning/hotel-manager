@@ -67,6 +67,7 @@ submitDateButton.addEventListener('click', function() {
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
   hotel.filterByRoomType(roomDropDown.value)
   createFilteredRoomsHTML()
+  displayNoRoomsAvaliable()
 })
 
 avalibleRoomsDisplay.addEventListener('click', (e) => {
@@ -150,7 +151,17 @@ const confirmBooking = (e) => {
   let confirmRoomNumber = e.target.classList[0]
   postBooking(currentCustomer.id, dateInput.value.split('-').join('/'), hotel.rooms[confirmRoomNumber - 1].number)
   .then(data => hotel.bookings.push(data.newBooking))
-  // instantiateHotel()
+}
+
+const displayNoRoomsAvaliable = () => {
+  if(hotel.avalibleRooms.length === 0){
+    avalibleRoomsDisplay.innerHTML = `
+    <div class='confirm-booking-box'>
+        <section class='room-information-box'>
+          <p class='no-rooms-avalible'>We are very sorry. There are no rooms avalible that meet your specifications. We are sorrry for any inconvience. Please try a different selection.</p>
+        </section>
+    </div>`
+  }
 }
 
 let totalCost = () => {
