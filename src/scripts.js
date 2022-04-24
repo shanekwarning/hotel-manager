@@ -112,7 +112,7 @@ const createConfirmationHTML = (e) => {
     <section class='room-information-box'>
       <p class='confirmation-header'> Are you sure you want to book room ${confirmRoomNumber}?</p>
       <div class='room-confirmation-styling-box'>
-      <p class='room-discriptors'>Room Number: ${hotel.rooms[confirmRoomNumber - 1].number}</p>
+      <p  class='room-discriptors'>Room Number: ${hotel.rooms[confirmRoomNumber - 1].number}</p>
       <p class='room-discriptors'>Room Type:${hotel.rooms[confirmRoomNumber - 1].roomType}</p>
       <p class='room-discriptors'>Number of Beds: ${hotel.rooms[confirmRoomNumber - 1].numBeds}</p>
       <p class='room-discriptors'>Bed Size: ${hotel.rooms[confirmRoomNumber - 1].bedSize}</p>
