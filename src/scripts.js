@@ -30,6 +30,8 @@ let currentCustomer;
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ EVENT LISTENERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 window.addEventListener('load', () => {
   instantiateHotel()
+  dateInput.min = setCurrentDate('-')
+  console.log(dateInput.min)
 });
 
 showAllBookingButton.addEventListener('click', function(){
@@ -37,6 +39,7 @@ showAllBookingButton.addEventListener('click', function(){
 })
 
 viewBookingsButton.addEventListener('click', function() {
+  console.log(setCurrentDate('-'))
   if(viewBookingsButton.innerText === 'View Your Bookings'){
   showYourBookingsView()
   avalibleRoomsDisplay.innerHTML = ''
@@ -53,6 +56,7 @@ submitDateButton.addEventListener('click', function() {
     popUpMessage()
     return
   }
+  console.log(dateInput.value)
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
   hotel.filterByRoomType(roomDropDown.value)
   createFilteredRoomsHTML()
@@ -173,6 +177,18 @@ let totalCost = () => {
   totalCostDisplay.innerText = '$'
   totalCostDisplay.innerText = `Total Spent on Rooms: $${currentCustomer.totalCost.toFixed(2)}`
 }
+
+const setCurrentDate = (sp) => {
+let today = new Date();
+let dd = today.getDate();
+let mm = today.getMonth()+1;
+let yyyy = today.getFullYear();
+
+if(dd<10) dd='0'+dd;
+if(mm<10) mm='0'+mm;
+return (yyyy+sp+mm+sp+dd);
+};
+
 
 const showCustomerBookings = () => {
   currentCustomer.populateCustomerBookings(hotel.bookings);
