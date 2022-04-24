@@ -10,16 +10,16 @@ class Hotel {
     this.avalibleRooms = []
     console.log('rooms', this.rooms)
     let takenRoomNumbers = this.bookings.filter(date => date.date === userDate).map(date => date.roomNumber)
-
+    console.log(takenRoomNumbers)
     this.rooms.forEach(room => this.avalibleRooms.push(room))
 
+    takenRoomNumbers.forEach(number => {
     this.avalibleRooms.forEach((room, index) => {
-      takenRoomNumbers.forEach(number => {
         if(room.number === number)
         this.avalibleRooms.splice(index, 1)
       })
     })
-
+    console.log(takenRoomNumbers)
   }
 
   filterByRoomType(room) {

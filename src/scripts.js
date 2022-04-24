@@ -8,7 +8,7 @@ import './css/styles.css';
 import './images/turing-logo.png';
 import './images/Hotel-room-img.jpg';
 import './images/classic-hotel-room-14.jpg'
-import { allFetchData, postBooking } from './apiCalls';
+import { fetchDataSets, allFetchData, postBooking } from './apiCalls';
 import Hotel from './classes/Hotel-class.js';
 import Customer from './classes/Customer-class.js';
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Quert Selectors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,7 +63,7 @@ viewBookingsButton.addEventListener('click', function() {
 
 submitDateButton.addEventListener('click', function() {
   console.log('hotel', hotel)
-  instantiateHotel()
+  // instantiateHotel()
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
   hotel.filterByRoomType(roomDropDown.value)
   createFilteredRoomsHTML()
@@ -75,7 +75,7 @@ avalibleRoomsDisplay.addEventListener('click', (e) => {
     createConfirmationHTML(e)
   }else if(e.target.dataset.confirm) {
     confirmBooking(e)
-    instantiateHotel()
+    // instantiateHotel()
     avalibleRoomsDisplay.innerText = 'Your booking is confirmed'
     console.log('hotels after booking', hotel)
   }
@@ -145,9 +145,12 @@ const instantiateHotel = () => {
   })
 }
 
+
 const confirmBooking = (e) => {
   let confirmRoomNumber = e.target.classList[0]
   postBooking(currentCustomer.id, dateInput.value.split('-').join('/'), hotel.rooms[confirmRoomNumber - 1].number)
+  .then(data => hotel.bookings.push(data.newBooking))
+  // instantiateHotel()
 }
 
 let totalCost = () => {
