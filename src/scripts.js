@@ -8,7 +8,7 @@ import './css/styles.css';
 import './images/turing-logo.png';
 import './images/Hotel-room-img.jpg';
 import './images/classic-hotel-room-14.jpg'
-import { allFetchData } from './apiCalls';
+import { allFetchData, postBooking } from './apiCalls';
 import Hotel from './classes/Hotel-class.js';
 import Customer from './classes/Customer-class.js';
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Quert Selectors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -29,20 +29,28 @@ let hotel;
 let currentCustomer;
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ EVENT LISTENERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 window.addEventListener('load', () => {
-  allFetchData.then(data => {
-  hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
-  currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
-}).catch(error => {
-  webSiteName.innerText = "Something went wrong please try again."
-  console.log(error)
-})
+  instantiateHotel()
+//   allFetchData.then(data => {
+//   hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
+//   currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
+// }).catch(error => {
+//   webSiteName.innerText = "Something went wrong please try again."
+//   console.log(error)
+// })
 });
+
+const testingOne2 = () => {
+  console.log(hotel)
+}
 
 showAllBookingButton.addEventListener('click', function(){
   showCustomerBookings()
 })
+
 viewBookingsButton.addEventListener('click', function() {
   if(viewBookingsButton.innerText === 'View Your Bookings'){
+    console.log('hello')
+    testingOne2()
   showYourBookingsView()
   avalibleRoomsDisplay.innerHTML = ''
   viewBookingsButton.innerText = 'Look for Rooms'
@@ -54,6 +62,8 @@ viewBookingsButton.addEventListener('click', function() {
 })
 
 submitDateButton.addEventListener('click', function() {
+  console.log('hotel', hotel)
+  instantiateHotel()
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
   hotel.filterByRoomType(roomDropDown.value)
   createFilteredRoomsHTML()
@@ -63,9 +73,14 @@ avalibleRoomsDisplay.addEventListener('click', (e) => {
   if(e.target.dataset.button) {
     avalibleRoomsDisplay.innerHTML = ''
     createConfirmationHTML(e)
-  };
-});
+  }else if(e.target.dataset.confirm) {
+    confirmBooking(e)
+    instantiateHotel()
+    avalibleRoomsDisplay.innerText = 'Your booking is confirmed'
+    console.log('hotels after booking', hotel)
+  }
 
+});
 
 let createShowBookingsHTML = () => {
   currentCustomer.bookings.forEach(booking => {
@@ -100,8 +115,6 @@ const createFilteredRoomsHTML = () => {
 
 const createConfirmationHTML = (e) => {
   let confirmRoomNumber = e.target.classList[0]
-  console.log(confirmRoomNumber)
-  console.log(hotel.rooms[confirmRoomNumber])
   avalibleRoomsDisplay.innerHTML =`
 <div class='confirm-booking-box'>
     <section class='room-information-box'>
@@ -114,10 +127,27 @@ const createConfirmationHTML = (e) => {
       <p class='room-discriptors'>This Room has a bidet:  ${hotel.rooms[confirmRoomNumber - 1].bidet}</p>
     </section>
     <section class='cost-per-night-box'>Cost Per Night: ${hotel.rooms[confirmRoomNumber - 1].costPerNight}
-    <button data-button='room' class="${confirmRoomNumber}">Confirm Reservation</button>
+    <button data-confirm='room' class="${confirmRoomNumber}">Confirm Reservation</button>
   </section>
 </div>
   </div>`
+}
+
+const instantiateHotel = () => {
+  allFetchData.then(data => {
+    console.log('data', data)
+  hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
+  currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
+  console.log(hotel)
+  }).catch(error => {
+  webSiteName.innerText = "Something went wrong please try again."
+  console.log(error)
+  })
+}
+
+const confirmBooking = (e) => {
+  let confirmRoomNumber = e.target.classList[0]
+  postBooking(currentCustomer.id, dateInput.value.split('-').join('/'), hotel.rooms[confirmRoomNumber - 1].number)
 }
 
 let totalCost = () => {
