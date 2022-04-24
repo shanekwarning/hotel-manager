@@ -8,7 +8,7 @@ import './css/styles.css';
 import './images/turing-logo.png';
 import './images/Hotel-room-img.jpg';
 import './images/classic-hotel-room-14.jpg'
-import { allFetchData } from './apiCalls';
+import { fetchDataSets, allFetchData, postBooking } from './apiCalls';
 import Hotel from './classes/Hotel-class.js';
 import Customer from './classes/Customer-class.js';
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Quert Selectors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -29,19 +29,17 @@ let hotel;
 let currentCustomer;
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ EVENT LISTENERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 window.addEventListener('load', () => {
-  allFetchData.then(data => {
-  hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
-  currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
-}).catch(error => {
-  webSiteName.innerText = "Something went wrong please try again."
-  console.log(error)
-})
+  instantiateHotel()
+  dateInput.min = setCurrentDate('-')
+  console.log(dateInput.min)
 });
 
 showAllBookingButton.addEventListener('click', function(){
   showCustomerBookings()
 })
+
 viewBookingsButton.addEventListener('click', function() {
+  console.log(setCurrentDate('-'))
   if(viewBookingsButton.innerText === 'View Your Bookings'){
   showYourBookingsView()
   avalibleRoomsDisplay.innerHTML = ''
@@ -54,11 +52,27 @@ viewBookingsButton.addEventListener('click', function() {
 })
 
 submitDateButton.addEventListener('click', function() {
+  if(dateInput.value === ''){
+    popUpMessage()
+    return
+  }
+  console.log(dateInput.value)
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
   hotel.filterByRoomType(roomDropDown.value)
   createFilteredRoomsHTML()
+  displayNoRoomsAvaliable()
 })
 
+avalibleRoomsDisplay.addEventListener('click', (e) => {
+  if(e.target.dataset.button) {
+    avalibleRoomsDisplay.innerHTML = ''
+    createConfirmationHTML(e)
+  }else if(e.target.dataset.confirm) {
+    confirmBooking(e)
+    displayRoomBookedConfirmationHTML()
+  }
+
+});
 
 let createShowBookingsHTML = () => {
   currentCustomer.bookings.forEach(booking => {
@@ -76,7 +90,7 @@ const createFilteredRoomsHTML = () => {
   avalibleRoomsDisplay.innerHTML = ''
   hotel.avalibleRooms.forEach(avalibleRoom => {
     avalibleRoomsDisplay.innerHTML += `
-    <div class='avalible-room-card'>
+    <div data-room='room-card' class='avalible-room-card'>
       <section class='room-information-box'>
         <p class='room-discriptors'>Room Number: ${avalibleRoom.number}</p>
         <p class='room-discriptors'>Room Type: ${avalibleRoom.roomType}</p>
@@ -85,16 +99,96 @@ const createFilteredRoomsHTML = () => {
         <p class='room-discriptors'>This Room has a bidet: ${avalibleRoom.bidet}</p>
       </section>
       <section class='cost-per-night-box'>Cost Per Night: $${avalibleRoom.costPerNight}
-      <button class='booking-button'>Book Now</button>
+      <button data-button='room' class="${avalibleRoom.number}">Book Now</button>
       </section>
     </div>`
   })
 }
 
+const createConfirmationHTML = (e) => {
+  let confirmRoomNumber = e.target.classList[0]
+  avalibleRoomsDisplay.innerHTML =`
+<div class='confirm-booking-box'>
+    <section class='room-information-box'>
+      <p class='confirmation-header'> Are you sure you want to book room ${confirmRoomNumber}?</p>
+      <div class='room-confirmation-styling-box'>
+      <p class='room-discriptors'>Room Number: ${hotel.rooms[confirmRoomNumber - 1].number}</p>
+      <p class='room-discriptors'>Room Type:${hotel.rooms[confirmRoomNumber - 1].roomType}</p>
+      <p class='room-discriptors'>Number of Beds: ${hotel.rooms[confirmRoomNumber - 1].numBeds}</p>
+      <p class='room-discriptors'>Bed Size: ${hotel.rooms[confirmRoomNumber - 1].bedSize}</p>
+      <p class='room-discriptors'>This Room has a bidet:  ${hotel.rooms[confirmRoomNumber - 1].bidet}</p>
+    </section>
+    <section class='cost-per-night-box'>Cost Per Night: ${hotel.rooms[confirmRoomNumber - 1].costPerNight}
+    <button data-confirm='room' class="${confirmRoomNumber}">Confirm Reservation</button>
+  </section>
+</div>
+  </div>`
+}
+
+const instantiateHotel = () => {
+  allFetchData.then(data => {
+    console.log('data', data)
+  hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
+  currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
+  console.log(hotel)
+  }).catch(error => {
+  webSiteName.innerText = "Something went wrong please try again."
+  console.log(error)
+  })
+}
+
+
+const confirmBooking = (e) => {
+  let confirmRoomNumber = e.target.classList[0]
+  postBooking(currentCustomer.id, dateInput.value.split('-').join('/'), hotel.rooms[confirmRoomNumber - 1].number)
+  .then(data => hotel.bookings.push(data.newBooking))
+}
+
+const displayNoRoomsAvaliable = () => {
+  if(hotel.avalibleRooms.length === 0){
+    avalibleRoomsDisplay.innerHTML = `
+    <div class='confirm-booking-box'>
+        <section class='room-information-box'>
+          <p class='no-rooms-avalible'>We are very sorry. There are no rooms avalible that meet your specifications. We are sorrry for any inconvience. Please try a different selection.</p>
+        </section>
+    </div>`
+  }
+}
+
+const displayRoomBookedConfirmationHTML = () => {
+  avalibleRoomsDisplay.innerHTML = `
+  <div class='confirm-booking-box'>
+      <section class='room-information-box'>
+        <p class='no-rooms-avalible'>Your booking is confirmed. We hope you have a nice stay.</p>
+      </section>
+  </div>`
+}
+
+const popUpMessage = () => {
+  avalibleRoomsDisplay.innerHTML = `
+  <div class='confirm-booking-box'>
+      <section class='room-information-box'>
+        <p class='no-rooms-avalible'>Please select a date and click submit.</p>
+      </section>
+  </div>`
+}
+
 let totalCost = () => {
-  totalCostDisplay.innerText = ''
+  totalCostDisplay.innerText = '$'
   totalCostDisplay.innerText = `Total Spent on Rooms: $${currentCustomer.totalCost.toFixed(2)}`
 }
+
+const setCurrentDate = (sp) => {
+let today = new Date();
+let dd = today.getDate();
+let mm = today.getMonth()+1;
+let yyyy = today.getFullYear();
+
+if(dd<10) dd='0'+dd;
+if(mm<10) mm='0'+mm;
+return (yyyy+sp+mm+sp+dd);
+};
+
 
 const showCustomerBookings = () => {
   currentCustomer.populateCustomerBookings(hotel.bookings);

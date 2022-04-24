@@ -9,6 +9,7 @@ class Customer {
     this.bookings = hotel.filter(booking => this.id === booking.userID)
   }
   calculateCost(hotel) {
+    this.totalCost = 0
     this.bookings.forEach(booking=> {
       hotel.forEach(room => {
         if(booking.roomNumber === room.number){
