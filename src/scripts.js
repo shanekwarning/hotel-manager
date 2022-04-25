@@ -8,7 +8,7 @@ import './css/styles.css';
 import './images/turing-logo.png';
 import './images/Hotel-room-img.jpg';
 import './images/classic-hotel-room-14.jpg'
-import { fetchDataSets, allFetchData, postBooking } from './apiCalls';
+import { fetchUser, allFetchData, postBooking } from './apiCalls';
 import Hotel from './classes/Hotel-class.js';
 import Customer from './classes/Customer-class.js';
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Quert Selectors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -177,15 +177,18 @@ let totalCost = () => {
 const instantiateHotel = () => {
   allFetchData.then(data => {
   hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
-  currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
+  // currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
   }).catch(error => {
   webSiteName.innerText = "Something went wrong please try again."
   console.log(error)
   })
 }
 const checkLoginInformation = () => {
+  let userNumber = userNameInput.value.split('').splice(8, 2)
+
   hotel.customers.forEach(customer => {
     if(userNameInput.value.trim() === `customer${customer.id}` && passwordInput.value === 'overlook2021'){
+      instantiateCustomer(userNumber.join(''))
       hide(loginPageDescriptor)
       hide(loginBox)
       show(searchForRoomDisplay)
@@ -194,6 +197,12 @@ const checkLoginInformation = () => {
       errorMessage.innerHTML = '<section>Username/Password is not a match</section>'
     }
   })
+}
+
+const instantiateCustomer = (id) => {
+  fetchUser(id).then(data => {
+    currentCustomer = new Customer(data.id, data.name)
+  }).catch(error => console.log(error))
 }
 
 const confirmBooking = (e) => {
