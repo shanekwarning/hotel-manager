@@ -99,7 +99,9 @@ const createFilteredRoomsHTML = () => {
         <p class='room-discriptors'>This Room has a bidet: ${avalibleRoom.bidet}</p>
       </section>
       <section class='cost-per-night-box'>Cost Per Night: $${avalibleRoom.costPerNight}
-      <button data-button='room' class="${avalibleRoom.number}">Book Now</button>
+      <button aria-label="${avalibleRoom.number}, Room Type: ${avalibleRoom.roomType}, Number of Beds: ${avalibleRoom.numBeds},
+      Bed Size: ${avalibleRoom.bedSize}, This Room has a bidet: ${avalibleRoom.bidet}, Cost Per Night: $${avalibleRoom.costPerNight} "
+       data-button='room' class="${avalibleRoom.number}">Book Now</button>
       </section>
     </div>`
   })
@@ -109,10 +111,10 @@ const createConfirmationHTML = (e) => {
   let confirmRoomNumber = e.target.classList[0]
   avalibleRoomsDisplay.innerHTML =`
 <div class='confirm-booking-box'>
-    <section class='room-information-box'>
+    <class='room-information-box'>
       <p class='confirmation-header'> Are you sure you want to book room ${confirmRoomNumber}?</p>
       <div class='room-confirmation-styling-box'>
-      <p class='room-discriptors'>Room Number: ${hotel.rooms[confirmRoomNumber - 1].number}</p>
+      <p  class='room-discriptors'>Room Number: ${hotel.rooms[confirmRoomNumber - 1].number}</p>
       <p class='room-discriptors'>Room Type:${hotel.rooms[confirmRoomNumber - 1].roomType}</p>
       <p class='room-discriptors'>Number of Beds: ${hotel.rooms[confirmRoomNumber - 1].numBeds}</p>
       <p class='room-discriptors'>Bed Size: ${hotel.rooms[confirmRoomNumber - 1].bedSize}</p>
@@ -123,25 +125,6 @@ const createConfirmationHTML = (e) => {
   </section>
 </div>
   </div>`
-}
-
-const instantiateHotel = () => {
-  allFetchData.then(data => {
-    console.log('data', data)
-  hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
-  currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
-  console.log(hotel)
-  }).catch(error => {
-  webSiteName.innerText = "Something went wrong please try again."
-  console.log(error)
-  })
-}
-
-
-const confirmBooking = (e) => {
-  let confirmRoomNumber = e.target.classList[0]
-  postBooking(currentCustomer.id, dateInput.value.split('-').join('/'), hotel.rooms[confirmRoomNumber - 1].number)
-  .then(data => hotel.bookings.push(data.newBooking))
 }
 
 const displayNoRoomsAvaliable = () => {
@@ -176,6 +159,25 @@ const popUpMessage = () => {
 let totalCost = () => {
   totalCostDisplay.innerText = '$'
   totalCostDisplay.innerText = `Total Spent on Rooms: $${currentCustomer.totalCost.toFixed(2)}`
+}
+
+const instantiateHotel = () => {
+  allFetchData.then(data => {
+    console.log('data', data)
+  hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
+  currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
+  console.log(hotel)
+  }).catch(error => {
+  webSiteName.innerText = "Something went wrong please try again."
+  console.log(error)
+  })
+}
+
+
+const confirmBooking = (e) => {
+  let confirmRoomNumber = e.target.classList[0]
+  postBooking(currentCustomer.id, dateInput.value.split('-').join('/'), hotel.rooms[confirmRoomNumber - 1].number)
+  .then(data => hotel.bookings.push(data.newBooking))
 }
 
 const setCurrentDate = (sp) => {
