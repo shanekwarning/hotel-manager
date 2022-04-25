@@ -3,6 +3,11 @@ const fetchDataSets = (dataSet) => {
     .catch(error => console.log(`Error: ${dataSet} fetch failed`))
 }
 
+const fetchUser = (userData) => {
+  return fetch(`http://localhost:3001/api/v1/customers/${userData}`).then(response => response.json())
+}
+
+
 let allFetchData = Promise.all([fetchDataSets('customers'), fetchDataSets('bookings'), fetchDataSets('rooms')])
 
 const postBooking = (userID, date, number) => {
@@ -18,13 +23,7 @@ const postBooking = (userID, date, number) => {
             'Content-Type': 'application/json'
           }
       }).then(response => response.json())
-// .then(response => {
-//   // fetchDataSets('bookings')
-//   allFetchData
-//   console.log('post response', response)
-// })
-
-// allFetchData = Promise.all([fetchDataSets('customers'), fetchDataSets('bookings'), fetchDataSets('rooms')])
+lFetchData = Promise.all([fetchDataSets('customers'), fetchDataSets('bookings'), fetchDataSets('rooms')])
 
 }
-export { fetchDataSets, allFetchData, postBooking }
+export { fetchUser, allFetchData, postBooking }

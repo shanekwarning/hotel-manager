@@ -8,12 +8,13 @@ import './css/styles.css';
 import './images/turing-logo.png';
 import './images/Hotel-room-img.jpg';
 import './images/classic-hotel-room-14.jpg'
-import { fetchDataSets, allFetchData, postBooking } from './apiCalls';
+import { fetchUser, allFetchData, postBooking } from './apiCalls';
 import Hotel from './classes/Hotel-class.js';
 import Customer from './classes/Customer-class.js';
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Quert Selectors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const bookedDatesDisplay = document.querySelector('.main__content-display')
 const showAllBookingButton = document.querySelector('.all-bookings')
+const headingBox = document.querySelector('.heading-box')
 const totalCostDisplay = document.querySelector('.main__cost-display')
 const submitDateButton = document.querySelector('.Submit-date')
 const dateInput = document.querySelector('.date-input')
@@ -23,6 +24,13 @@ const avalibleRoomsDisplay = document.querySelector('.main__avaliable-rooms-disp
 const customerBookingsDisplay = document.querySelector('.main__customer-booking-display')
 const viewBookingsButton = document.querySelector('.bookings-button')
 const webSiteName = document.querySelector('h1')
+const loginButton = document.getElementById('login')
+const userNameInput = document.querySelector('.user-name')
+const passwordInput = document.querySelector('.password')
+const loginPageDescriptor = document.querySelector('.login-page-descriptor')
+const loginBox = document.querySelector('.main__login-page-display')
+const errorMessage = document.querySelector('.error-message')
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Global Variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let bookings;
 let hotel;
@@ -31,8 +39,14 @@ let currentCustomer;
 window.addEventListener('load', () => {
   instantiateHotel()
   dateInput.min = setCurrentDate('-')
-  console.log(dateInput.min)
+
 });
+
+loginButton.addEventListener('click', function(){
+  event.preventDefault()
+  checkLoginInformation()
+
+})
 
 showAllBookingButton.addEventListener('click', function(){
   showCustomerBookings()
@@ -56,7 +70,6 @@ submitDateButton.addEventListener('click', function() {
     popUpMessage()
     return
   }
-  console.log(dateInput.value)
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
   hotel.filterByRoomType(roomDropDown.value)
   createFilteredRoomsHTML()
@@ -163,16 +176,34 @@ let totalCost = () => {
 
 const instantiateHotel = () => {
   allFetchData.then(data => {
-    console.log('data', data)
   hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
-  currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
-  console.log(hotel)
+  // currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
   }).catch(error => {
   webSiteName.innerText = "Something went wrong please try again."
   console.log(error)
   })
 }
+const checkLoginInformation = () => {
+  let userNumber = userNameInput.value.split('').splice(8, 2)
 
+  hotel.customers.forEach(customer => {
+    if(userNameInput.value.trim() === `customer${customer.id}` && passwordInput.value === 'overlook2021'){
+      instantiateCustomer(userNumber.join(''))
+      hide(loginPageDescriptor)
+      hide(loginBox)
+      show(searchForRoomDisplay)
+      show(headingBox)
+    } else if(userNameInput.value.trim() !== `customer${customer.id}` || passwordInput.value !== 'overlook2021') {
+      errorMessage.innerHTML = '<section>Username/Password is not a match</section>'
+    }
+  })
+}
+
+const instantiateCustomer = (id) => {
+  fetchUser(id).then(data => {
+    currentCustomer = new Customer(data.id, data.name)
+  }).catch(error => console.log(error))
+}
 
 const confirmBooking = (e) => {
   let confirmRoomNumber = e.target.classList[0]

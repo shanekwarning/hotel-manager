@@ -8,16 +8,30 @@
 </head>
 <body>
   <header class='page-header'>
+  <p class='login-page-descriptor '> Welcome to
   <h1> Travelers Delight Hotel </h1>
 </header>
-  <section class='heading-box'>
+  <section class='heading-box hidden'>
     <section class="customer-name-display">Welcome User Name</section>
     <nav class='navbar'>
       <button class='login-button'>Log Out</button>
       <button class='bookings-button'>View Your Bookings</button>
   </section>
   <main class='main-hotel-content-display'>
-    <section class='main__search-for-room-display '>
+    <form class='main__login-page-display '>
+      <section class="main__login-box">
+        <h2>Please Login</h2>
+        <p class='error-message'></p>
+        <div class='login-input-box-box'>
+        <label for="username"><b>Username</b></label>
+        <input class='user-name' type='text' placeholder='Enter Username' name='username' required >
+        <label for='password'><b>Password</b></label>
+        <input class='password' type='password' placeholder="Enter Password" name='password' required >
+        <button id='login' type='submit'>Login</button>
+      </div>
+      </section>
+    </form>
+    <section class='main__search-for-room-display hidden'>
       <section class='main__search-for-room-display-bar'>
         <p>What Day Would You Like To Stay?</p>
          <section class='main__room-search-button-box'>
