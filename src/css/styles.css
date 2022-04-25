@@ -12,12 +12,24 @@ body {
 
 .page-header {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   background-color: #14bddb;
 }
 
 h1 {
   height:15%
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+}
+
+.login-page-descriptor {
+  font-size: 25px;
+  font-weight: bolder;
 }
 
 .heading-box{
@@ -81,6 +93,16 @@ h1 {
   margin-bottom: 10px
 }
 
+.main__login-page-display{
+  margin-top: 15%;
+  color: #FFFFF0;
+  background-color: #383428;
+  opacity: 90%;
+  border-radius: 20px;
+  width: 30%;
+  margin-left: 35%;
+}
+
 .confirm-booking-box {
   display: flex;
   justify-content: center;
@@ -97,6 +119,10 @@ h1 {
 width: 100%;
 }
 
+.login-input-box-box {
+  display: flex;
+  justify-content: space-around;
+}
 .main__content-display-booked-dates {
   justify-content: center
 }
