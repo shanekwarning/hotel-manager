@@ -1,4 +1,4 @@
-#Hotel Manager 
+# Hotel Manager 
 
 Hotel Manager is an application that allows a customer to book hotel rooms. It allows them to find a room based on the date and room type they are looking for. It will also keep track of the total amount of money a customer has spent.
 
@@ -20,90 +20,39 @@ Hotel Manager is an application that allows a customer to book hotel rooms. It a
 5. Do not run 'npm audit fix --force'. This will update the latest verison of packages. You need to be using the correct webPack which is not the latest verison.
 6. You will now need to clone down a second reop to your local. This site does not use local data but uses data from another deployable API. You can clone down the repo [here](https://github.com/turingschool-examples/overlook-api), and follow the instructions on its ReadMe.
 
-### Using the Application![Screen Shot 2022-04-26 at 3 07 52 PM](https://user-images.githubusercontent.com/97068979/165383613-68d63f68-629b-4b8d-99e8-8a4ce9418632.png)
+### Using the Application
 
 * On page load you will be brought to a login screen. You will need to login to access the rest of the applications content. To login you can type any user name between 'customer1' through 'customer50'. The user name always needs to start with 'customer' and end with a number between 1-50. The number at the end will determine which data you pull for the current customer. The password, regardless of the customer is always 'overlook2021'.
+ ![Login Page](https://user-images.githubusercontent.com/97068979/165383613-68d63f68-629b-4b8d-99e8-8a4ce9418632.png)
 
-After one person has gone through the steps of cloning down this repo and editing the remote, everyone should clone down the repo.
+ * From here you will be brought to the booking page. You will be able to select the date you would like to book a hotel and filter the room prefences by room type using the drop down menu.
+ ![Photo of the Booking Page](https://user-images.githubusercontent.com/97068979/165384960-1c2a9619-ee83-4614-816e-b8c48dff064f.png)
+ 
+ * Making selections can be seen in the below GIF. Once you make your selection it will populate the room options. You can click the booking button which will bring you to the confirmation page. If you click confirm booking, the booking will be added the customers booking list which can be seen on another page. 
 
-Then install the library dependencies. Run:
+![BookRoom](https://user-images.githubusercontent.com/97068979/165390135-9f85e2e4-05b1-434d-b61c-cd9e277a3f66.gif)
 
-```bash
-npm install
-```
+ * To view you bookings you can click the 'View Your Bookings' button. This will take you to your booking page. From here you can click the 'View All Bookings' button to display all your booked rooms and total cost of the rooms. You can select the 'Look for Rooms' button on this page to go back to book additional rooms.
+ 
+ * Lastly you are able to logout by clicking the 'Log Out' button. This will clear your customer info and take you back to the login page.
 
-To verify that it is setup correctly, run `npm start` in your terminal. Go to `http://localhost:8080/` and you should see a page with the Turing logo image and a beautiful gradient background. If that's the case, you're good to go. Enter `control + c` in your terminal to stop the server at any time.
+![LogOut](https://user-images.githubusercontent.com/97068979/165395313-7252e6b6-1110-4103-9b13-ddb2fe8eabdb.gif)
 
-## Where to Add Your Code
+## Contributors
 
-### JavaScript
+* Shane Warning [GitHub](https://github.com/shanekwarning)
 
-You have to be very intentional with where you add your feature code. This repo uses a tool called [webpack](https://webpack.js.org/) to combine many JavaScript files into one big file. Webpack enables you to have many, separate JavaScript files to keep your code organized and readable. Webpack expects all of your code files to be in a specific place, or else it doesn't know how to combine them all behind the scenes.
 
-**Create all of your feature code files in the `src` directory.**
+## Challeneges
+ * The challeneges for this project included working with fetch requests and timing. Learning to incorporate functions that were time sensitive inside .then() was a major break through. Another challenge was using two iterator methods in one function. The difficulty was having them in the correct order so that they would iterator over all needed data.
 
-Since code is separated into multiple files, you need to use the `import` and `export` syntax to share code across file.
+## Future Additions
 
-Here is a video that walks through some information about [import and export](https://www.youtube.com/watch?v=_3oSWwapPKQ). There are a lot of resources out there about `import` and `export`, and resources will sometimes call them `ES6 modules`. It's something you will see in React and beyond.
+ * Having the booked dates sort by date.
+ * Having the customer be able to view, prior bookings, todays bookings, and future bookings.
+ * Add photos to room information display cards.
+ * Create a cancel button for the confirm reservation cards.
 
-### HTML
+## Testing
 
-Add the HTML you need in the `index.html` file in the `./dist` directory. There is some boilerplate HTML that exists from the start that you can modify.
-
-### Images
-
-Add your image files in the `src/images` directory. Similar to CSS files, you need to `import` image files in the JavaScript entry file (`scripts.js`). Then go into the HTML and add an `img` element with the `src` attribute pointing to the `images` directory. There is an example in the `index.html` file for you to see.
-
-## How to View Your Code in Action
-
-In the terminal, run:
-
-```bash
-npm start
-```
-
-You will see a bunch of lines output to your terminal. One of those lines will be something like:
-
-```bash
-Project is running at http://localhost:8080/
-```
-
-Go to `http://localhost:8080/` in your browser to view your code running in the browser.
-
----
-
-## Test Files Organization
-
-Similar to feature code, your test code needs to be put in a specific place for it to run successfully.
-
-**Put all of your test files in the `test` directory.** As a convention, all test filenames should end with `-test.js`. For instance: `box-test.js`.
-
-## Running Your Tests
-
-Run your test suite using the command:
-
-```bash
-npm test
-```
-
-The test results will output to the terminal.
-
----
-
-## Linting Your Code
-
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit - the linter is still running successfully.
-
-Your linter will look at the JavaScript files you have within the `src` directory and the `test` directory.
-
-## Webpack?
-
-If you look in the `package.json` file, you'll see one of the library dependencies called `webpack`. If you're interested in learning more about what Webpack is and how it works behind the scenes, take a look through the [Webpack configuration documentation](https://webpack.js.org/concepts/).
-
-## Deploying to GitHub Pages
-
-_If you are finished with the functionality and testing of your project_, then you can consider deploying your project to the web! This way anyone can play it without cloning down your repo.
-
-[GitHub Pages](https://pages.github.com/) is a great way to deploy your project to the web. Don't worry about this until your project is free of bugs and well tested!
-
-If you _are_ done, you can follow [this procedure](./gh-pages-procedure.md) to get your project live on GitHub Pages.
+ * Tests have been built into the application for the classes. You can run the tests by running 'npm test' in the terminal.
