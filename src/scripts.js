@@ -1,11 +1,5 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
 
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png';
 import './images/Hotel-room-img.jpg';
 import './images/classic-hotel-room-14.jpg'
 import { fetchUser, allFetchData, postBooking } from './apiCalls';
@@ -30,6 +24,8 @@ const passwordInput = document.querySelector('.password')
 const loginPageDescriptor = document.querySelector('.login-page-descriptor')
 const loginBox = document.querySelector('.main__login-page-display')
 const errorMessage = document.querySelector('.error-message')
+const logoutButton = document.querySelector('.logout-button')
+const customerNameDisplay = document.querySelector('.customer-name-display')
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Global Variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let bookings;
@@ -53,9 +49,9 @@ showAllBookingButton.addEventListener('click', function(){
 })
 
 viewBookingsButton.addEventListener('click', function() {
-  console.log(setCurrentDate('-'))
   if(viewBookingsButton.innerText === 'View Your Bookings'){
   showYourBookingsView()
+  totalCostDisplay.innerText = ''
   avalibleRoomsDisplay.innerHTML = ''
   viewBookingsButton.innerText = 'Look for Rooms'
 } else if (viewBookingsButton.innerText === 'Look for Rooms'){
@@ -67,7 +63,12 @@ viewBookingsButton.addEventListener('click', function() {
 
 submitDateButton.addEventListener('click', function() {
   if(dateInput.value === ''){
-    popUpMessage()
+    popUpMessage('Please select a date.')
+    return
+  }
+
+  if(dateInput.value < setCurrentDate('-')){
+    popUpMessage('Please select a current date.')
     return
   }
   hotel.filterAvalibleRooms(dateInput.value.split('-').join('/'))
@@ -86,6 +87,10 @@ avalibleRoomsDisplay.addEventListener('click', (e) => {
   }
 
 });
+logoutButton.addEventListener('click', () => {
+  logout()
+})
+
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Dom Updates ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -162,18 +167,21 @@ const displayRoomBookedConfirmationHTML = () => {
   </div>`
 }
 
-const popUpMessage = () => {
+const popUpMessage = (message) => {
   avalibleRoomsDisplay.innerHTML = `
   <div class='confirm-booking-box'>
       <section class='room-information-box'>
-        <p class='no-rooms-avalible'>Please select a date and click submit.</p>
+        <p class='no-rooms-avalible'>${message}</p>
       </section>
   </div>`
 }
 
 let totalCost = () => {
-  totalCostDisplay.innerText = '$'
   totalCostDisplay.innerText = `Total Spent on Rooms: $${currentCustomer.totalCost.toFixed(2)}`
+}
+
+const displayCustomerName = () => {
+  customerNameDisplay.innerText = `Welcome ${currentCustomer.name}`
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ scripts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -204,7 +212,18 @@ const checkLoginInformation = () => {
 const instantiateCustomer = (id) => {
   fetchUser(id).then(data => {
     currentCustomer = new Customer(data.id, data.name)
-  }).catch(error => console.log(error))
+  }).then(info => displayCustomerName()).catch(error => console.log(error))
+}
+
+const logout = () => {
+  userNameInput.value = ''
+  passwordInput.value = ''
+  errorMessage.innerHTML = ''
+  show(loginPageDescriptor)
+  show(loginBox)
+  hide(searchForRoomDisplay)
+  hide(headingBox)
+  currentCustomer = undefined
 }
 
 const confirmBooking = (e) => {
@@ -226,7 +245,7 @@ return (yyyy+sp+mm+sp+dd);
 
 
 const showCustomerBookings = () => {
-  currentCustomer.populateCustomerBookings(hotel.bookings);
+  currentCustomer.populateCustomerBookings(hotel.bookings)
   currentCustomer.calculateCost(hotel.rooms)
   createShowBookingsHTML()
   totalCost()
