@@ -14,8 +14,8 @@
   <section class='heading-box hidden'>
     <section class="customer-name-display">Welcome User Name</section>
     <nav class='navbar'>
-      <button class='login-button'>Log Out</button>
       <button class='bookings-button'>View Your Bookings</button>
+      <button class='logout-button'>Log Out</button>
   </section>
   <main class='main-hotel-content-display'>
     <form class='main__login-page-display '>
@@ -24,9 +24,9 @@
         <p class='error-message'></p>
         <div class='login-input-box-box'>
         <label for="username"><b>Username</b></label>
-        <input class='user-name' type='text' placeholder='Enter Username' name='username' required >
+        <input class='user-name' type='text' placeholder='Enter Username' name='username' >
         <label for='password'><b>Password</b></label>
-        <input class='password' type='password' placeholder="Enter Password" name='password' required >
+        <input class='password' type='password' placeholder="Enter Password" name='password'>
         <button id='login' type='submit'>Login</button>
       </div>
       </section>
@@ -56,10 +56,7 @@
     <section class='main__information-display-bar'>
       <p>Your Bookings</p>
        <section class='main__button-box'>
-         <button class='all-bookings' data-button='all-bookings'>All</button>
-         <button data-button='Todays-bookings'>Today</button>
-         <button data-button='Future-bookings'>Future</button>
-         <button data-button='Past-bookings'>Past</button>
+         <button class='all-bookings' data-button='all-bookings'>View All Bookings</button>
        </section>
        <section class='main__cost-display'></section>
      </section>
