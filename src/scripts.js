@@ -53,9 +53,9 @@ showAllBookingButton.addEventListener('click', function(){
 })
 
 viewBookingsButton.addEventListener('click', function() {
-  console.log(setCurrentDate('-'))
   if(viewBookingsButton.innerText === 'View Your Bookings'){
   showYourBookingsView()
+  totalCostDisplay.innerText = ''
   avalibleRoomsDisplay.innerHTML = ''
   viewBookingsButton.innerText = 'Look for Rooms'
 } else if (viewBookingsButton.innerText === 'Look for Rooms'){
@@ -172,7 +172,7 @@ const popUpMessage = () => {
 }
 
 let totalCost = () => {
-  totalCostDisplay.innerText = '$'
+  totalCostDisplay.innerText = ''
   totalCostDisplay.innerText = `Total Spent on Rooms: $${currentCustomer.totalCost.toFixed(2)}`
 }
 
