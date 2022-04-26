@@ -1,18 +1,28 @@
-# Webpack Starter Kit
+#Hotel Manager 
 
-## Clone This Repo
+Hotel Manager is an application that allows a customer to book hotel rooms. It allows them to find a room based on the date and room type they are looking for. It will also keep track of the total amount of money a customer has spent.
 
-That's right, _clone_ not fork. You will use this repo multiple times, but you can only fork a repository once. So here is what you need to do to clone the repo and still be able to push changes to your repo:
+## Built With
 
-1. Clone down this repo. Since you don't want to name your project "webpack-starter-kit", you can use an optional argument when you run `git clone` (you replace the `[...]` with the terminal command arguments): `git clone [remote-address] [what you want to name the repo]`
-1. Remove the default remote: `git remote rm origin` (notice that `git remote -v` not gives you back nothing)
-1. Create a new repo on GitHub with the name of `[what you want to name the repo]` to be consistent with naming
-1. Copy the address that you would use to clone down this repo - something like `git@github.com:...`
-1. Add this remote to your cloned down repo: `git remote add origin [address you copied in the previous step]` - do not include the brackets
+  * JavaScript
+  * CSS
+  * HTML
+  * WebPack
 
-Now try to commit something (just add a line in the README) and push it up to your new repo. If everything is setup correctly, you should see the changes on GitHub.
+## Getting Started:
 
-## Setup
+### Where to Start
+
+1. Start by going [here](https://github.com/shanekwarning/hotel-managerClone). From here you will want to click on the green rectangular button titled 'Code'. This should open a drop down menu where you should see a link. To the left of the link there should be an icon with tow over lapping squares. You can click the icon to copy the link. For convience you can copy it here, git@github.com:shanekwarning/hotel-manager.git. 
+2. You will want to clone down the reop to your terminal using 'git clone git@github.com:shanekwarning/hotel-manager.git'. 
+3. Once you have cloned the repo, change inot the directory and install the project dependencies. Run 'npm install' to install the project dependencies.
+4. Run npm start in the terminal to see the HTML page link. You will need to copy and paste the local servre from the terminal and paste it into your browser. The local server should be simialiar to 'http://localhost:8080/'. You can stop the local server by using. 'Control + c' in your terminal. Closing the terminal without stopping the server first could allow the server to continue to run in the background and cause problems. This is because this application uses wepPack.
+5. Do not run 'npm audit fix --force'. This will update the latest verison of packages. You need to be using the correct webPack which is not the latest verison.
+6. You will now need to clone down a second reop to your local. This site does not use local data but uses data from another deployable API. You can clone down the repo [here](https://github.com/turingschool-examples/overlook-api), and follow the instructions on its ReadMe.
+
+### Using the Application![Screen Shot 2022-04-26 at 3 07 52 PM](https://user-images.githubusercontent.com/97068979/165383613-68d63f68-629b-4b8d-99e8-8a4ce9418632.png)
+
+* On page load you will be brought to a login screen. You will need to login to access the rest of the applications content. To login you can type any user name between 'customer1' through 'customer50'. The user name always needs to start with 'customer' and end with a number between 1-50. The number at the end will determine which data you pull for the current customer. The password, regardless of the customer is always 'overlook2021'.
 
 After one person has gone through the steps of cloning down this repo and editing the remote, everyone should clone down the repo.
 
