@@ -11,7 +11,7 @@ import './images/classic-hotel-room-14.jpg'
 import { fetchUser, allFetchData, postBooking } from './apiCalls';
 import Hotel from './classes/Hotel-class.js';
 import Customer from './classes/Customer-class.js';
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Quert Selectors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Query Selectors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const bookedDatesDisplay = document.querySelector('.main__content-display')
 const showAllBookingButton = document.querySelector('.all-bookings')
 const headingBox = document.querySelector('.heading-box')
@@ -86,6 +86,8 @@ avalibleRoomsDisplay.addEventListener('click', (e) => {
   }
 
 });
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Dom Updates ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 let createShowBookingsHTML = () => {
   currentCustomer.bookings.forEach(booking => {
@@ -174,10 +176,10 @@ let totalCost = () => {
   totalCostDisplay.innerText = `Total Spent on Rooms: $${currentCustomer.totalCost.toFixed(2)}`
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~ scripts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const instantiateHotel = () => {
   allFetchData.then(data => {
   hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
-  // currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
   }).catch(error => {
   webSiteName.innerText = "Something went wrong please try again."
   console.log(error)
