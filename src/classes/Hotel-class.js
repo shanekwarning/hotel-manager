@@ -19,7 +19,6 @@ class Hotel {
         this.avalibleRooms.splice(index, 1)
       })
     })
-    console.log(takenRoomNumbers)
   }
 
   filterByRoomType(room) {
@@ -28,7 +27,6 @@ class Hotel {
     } else if(room !== 'all'){
       this.avalibleRooms = this.avalibleRooms.filter(type => type.roomType === room)
     }
-    console.log(this.avalibleRooms)
   }
 
 }
