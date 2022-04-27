@@ -188,6 +188,8 @@ const displayCustomerName = () => {
 const instantiateHotel = () => {
   allFetchData.then(data => {
   hotel = new Hotel(data[0].customers, data[1].bookings, data[2].rooms)
+  currentCustomer = new Customer(data[0].customers[0].id, data[0].customers[0].name)
+  console.log(currentCustomer)
   }).catch(error => {
   webSiteName.innerText = "Something went wrong please try again."
   console.log(error)
